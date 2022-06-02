@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@{ViewData["Title"] = "Home Page";}
+
+<!-- Standard greeting -->
+@if (!SignInManager.IsSignedIn(User))
+{
+    <section class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Feel free to browse through all our products.</p>
+        <p>If you are new to this website please register, otherwise login.</p>
+    </section>
+}
+
+<!-- User details -->
+@if (SignInManager.IsSignedIn(User))
+{
+    @model IdentityUser
+    <section>
+        <!-- Details of user -->
+        <section class="details">
+            <dl class="row">
+                <p>Username:</p>
+                <dt class="col-6 col-md-2">@Html.DisplayFor(Model => Model.UserName)</dt>
+                
+                <p>Email:</p>
+                <dt class="d-none d-md-block col-md-6">@Html.DisplayFor(Model => Model.Email)</dt>
+                
+                <p>Phonenumber:</p>
+                <dt class="col-2 col-md-1">@Html.DisplayFor(Model => Model.PhoneNumber)</dt>
+            </dl>
+        </section>
+    </section>
+}

@@ -1,0 +1,22 @@
+@model Entities.Product
+
+@{ViewData["Title"] = "Create";}
+
+<h1>Create Product</h1>
+
+<h4>Product</h4>
+<hr />
+<section class="dashboard">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @await Html.PartialAsync("fragments/inputs")
+            </form>
+        </div>
+    </div>
+</section>
+
+<div><a asp-action="Index">Go back</a></div>
+
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

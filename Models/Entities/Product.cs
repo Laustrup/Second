@@ -10,7 +10,8 @@ namespace Entities
         public int Id {get; set;}
         
         public string UserId { get; set; }
-        public IdentityUser? User { get; set; }
+        public string UserEmail { get; set; }
+        public IdentityUser User { get; set; }
 
         [Required(ErrorMessage = "Please insert title...")]
         [MinLength(3,ErrorMessage = "Minimum length is 3!")]
@@ -32,11 +33,8 @@ namespace Entities
             if (_comments == null) {
                 return null;
             }
-            else
-            {
-                _comments.Add(comment);
-                return _comments;
-            }
+            _comments.Add(comment);
+            return _comments;
         }
     }
 } 

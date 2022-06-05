@@ -24,6 +24,21 @@ public class CartController : Controller
     {
         return View(service.FindCart(_manager.GetUserAsync(HttpContext.User)).Products); 
     }
+    
+    [HttpPost]
+    public IActionResult AddToCart(int id,
+        [Bind("Id", "Title", "Description", "Price", "Status", "User", "UserId", "UserEmail")] Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            Cart cart = _context.Carts.Find(id);
+            cart.AddProduct(product);
+            
+            _context.Carts.Update(cart);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Index");
+    }
 
     public IActionResult BuyAll()
     {

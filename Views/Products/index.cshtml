@@ -24,7 +24,7 @@
     <section class="row">
         <div class="col-6 col-md-2">Title</div>
         <div class="col-2 col-md-1">Price</div>
-        <div class="col-2 col-md-1">Owner</div>
+        <div class="col-6 col-md-2">Owner</div>
         <div class="col-2 col-md-1">Status</div>
     </section>
     
@@ -35,21 +35,20 @@
         <section class="row grid-row">
             <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
             <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
-            <div class="col-2 col-md-1">@Html.DisplayFor(x => product.User.Email)</div>
+            <div class="col-6 col-md-2">@Html.DisplayFor(x => product.UserEmail)</div>
             <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Status)</div>
             
             <!-- Buttons -->
             <div class="col-1"><a class="btn btn-secondary" asp-controller="Comments" asp-action="Index" asp-route-id="@product.Id">View comments</a></div>
             <div class="col-1"><a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@product.Id">Create a comment</a></div>
-            @if (product.User != null && SignInManager.UserManager.GetUserId(SignInManager.Context.User) == product.User.Id)
+            @if (product.UserEmail != null && SignInManager.UserManager.GetUserName(SignInManager.Context.User) == product.UserEmail)
             {
                 <div class="col-1"><a class="btn btn-secondary" asp-action="edit" asp-route-id="@product.Id">Edit</a></div>
             }
-            @if (product.User != null && SignInManager.UserManager.GetUserId(SignInManager.Context.User) != product.User.Id)
+            else 
             {
-                <div class="col-1"><a class="btn btn-secondary" asp-action="edit" asp-route-id="@product.Id">Put in cart</a></div>
+                <div class="col-1"><a class="btn btn-secondary" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id">Put in cart</a></div>
             }
-
         </section>
         }
     </section>

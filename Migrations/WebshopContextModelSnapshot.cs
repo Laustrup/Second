@@ -78,6 +78,9 @@ namespace Webshop.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 

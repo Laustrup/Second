@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Entities;
 using Data;
+using Entities.Statuses;
 
 namespace Controllers 
 {
@@ -27,13 +28,18 @@ namespace Controllers
         public IActionResult Create() { return View(); }
 
         [HttpPost]
-        public IActionResult Create([Bind("Title", "Description", "Price", "Status")] Product product)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title", "Description", "Price")] Product product)
         {
             if (ModelState.IsValid)
             {
-                product.User = _manager.GetUserAsync(HttpContext.User).Result;
+                product.User = await _manager.FindByNameAsync(HttpContext.User.Identity.Name);
+                product.UserEmail = product.User.Email;
+                product.Status = ProductStatus.UNSOLD;
+                
                 _context.Products.Add(product);
                 _context.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             return View();
@@ -52,17 +58,19 @@ namespace Controllers
             }
             return View();
         }
-        
-        [HttpPost]
-        public IActionResult AddToCart(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (ModelState.IsValid)
+            Product product = (await _context.Products.FindAsync(id));
+            
+            if (product!=null && ModelState.IsValid) 
             {
-                Cart cart = _context.Carts.Find(id);
-                cart.AddProduct(product);
-                _context.Carts.Update(cart);
-                _context.SaveChanges();
+                _context.Remove(product);
+                await _context.SaveChangesAsync();
             }
+            
             return RedirectToAction("Index");
         }
     }

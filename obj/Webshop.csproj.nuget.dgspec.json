@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Laust\\Visual_studio\\ASP.NET\\Webshop\\Webshop.csproj": {}
+    "C:\\Users\\Laust\\RiderProjects\\Second\\Webshop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Laust\\Visual_studio\\ASP.NET\\Webshop\\Webshop.csproj": {
+    "C:\\Users\\Laust\\RiderProjects\\Second\\Webshop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Laust\\Visual_studio\\ASP.NET\\Webshop\\Webshop.csproj",
+        "projectUniqueName": "C:\\Users\\Laust\\RiderProjects\\Second\\Webshop.csproj",
         "projectName": "Webshop",
-        "projectPath": "C:\\Users\\Laust\\Visual_studio\\ASP.NET\\Webshop\\Webshop.csproj",
-        "packagesPath": "C:\\Users\\laustadmin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Laust\\Visual_studio\\ASP.NET\\Webshop\\obj\\",
+        "projectPath": "C:\\Users\\Laust\\RiderProjects\\Second\\Webshop.csproj",
+        "packagesPath": "C:\\Users\\Laust\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Laust\\RiderProjects\\Second\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\laustadmin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Laust\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

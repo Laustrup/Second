@@ -13,17 +13,20 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            this.SeedProducts(builder);
+            SeedProducts(builder);
         }
 
         public DbSet<Product> Products { get; set; }
-
         private void SeedProducts(ModelBuilder builder)
         {
             builder.Entity<Product>().HasData(
                 new Product() 
                 {
-                    Id = 1, Title = "Gibson Les Paul Standard", Description = "This is a guitar", Price = 15000, Status = ProductStatus.UNSOLD
+                    Id = 1, Title = "Gibson Les Paul Standard",
+                    Description = "This is a guitar",
+                    Price = 15000,
+                    Status = ProductStatus.UNSOLD,
+                    UserId = "1", UserEmail = "laust.bonnesen@mail.com"
                 }
             );
         }
@@ -31,5 +34,6 @@ namespace Data
         public DbSet<Cart> Carts { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
+        
     }
 }

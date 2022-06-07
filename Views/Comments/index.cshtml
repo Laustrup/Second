@@ -1,43 +1,55 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
-@model IEnumerable<Entities.Comment>
+@model Entities.Product
 
 @inject SignInManager<IdentityUser> SignInManager
 
-@{ViewData["Title"] = Model.GetEnumerator().Current.Product.Title;}
+@{ViewData["Title"] = Model.Title;}
 
-<h1><a asp-action="Create">Create new comment</a></h1>
+<section class="justify-content-between">
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <p>@Html.DisplayFor(model => model.Description)</p>
+</section>
+
+<div class="col-1">
+    <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.Id">Create a comment</a>
+</div>
 
 <table class="table">
     <thead>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GetEnumerator().Current.Product.Title)   
+        <th class="col-2 col-md-2">
+            @Html.DisplayNameFor(model => model.Comments.First().User.UserName)   
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GetEnumerator().Current.Product.Description)
+        <th class="col-3 col-md-5">
+            @Html.DisplayNameFor(model => model.Comments.First().Content)
+        </th>
+        <th class="col-1 col-md-1">
+            @Html.DisplayNameFor(model => model.Comments.First().TimeStamp) 
         </th>
     </tr>
     </thead>
     @if (Model != null)
     {
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Comments)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Content)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.Description)
+                        @Html.DisplayFor(modelItem => item.TimeStamp)
                     </td>
-                    
+
                     @if (item.Product.UserEmail != null &&
                          SignInManager.UserManager.GetUserName(SignInManager.Context.User) == item.Product.UserEmail)
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     }
@@ -51,7 +63,4 @@
             <h4>There ain't no comments, be the first to comment!</h4>
         </tbody>
     }
-    <div class="col-1">
-        <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.GetEnumerator().Current.Product.Id">Create a comment</a>
-    </div>
 </table>

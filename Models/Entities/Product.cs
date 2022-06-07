@@ -24,7 +24,11 @@ namespace Entities
         [Required(ErrorMessage = "Please insert price...")]
         private int _price {get; set;} public int Price {get{return _price;} set{_price = value;}}
 
-        private List<Comment>? _comments {get;} public List<Comment>? Comments {get{return _comments;}}
+        private List<Comment>? _comments { get; set; } public List<Comment>? Comments
+        {
+            get{return _comments;}
+            set => _comments = value;
+        }
 
         private ProductStatus _status {get;set;} public ProductStatus Status {get{return _status;} set{_status = value;}}
 

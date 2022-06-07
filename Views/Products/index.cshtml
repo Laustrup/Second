@@ -32,24 +32,26 @@
     <section>
         @foreach (var product in Model)
         {
-        <section class="row grid-row">
-            <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
-            <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
-            <div class="col-6 col-md-2">@Html.DisplayFor(x => product.UserEmail)</div>
-            <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Status)</div>
-            
-            <!-- Buttons -->
-            <div class="col-1"><a class="btn btn-secondary" asp-controller="Comments" asp-action="Index" asp-route-id="@product.Id">View comments</a></div>
-            <div class="col-1"><a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@product.Id">Create a comment</a></div>
-            @if (product.UserEmail != null && SignInManager.UserManager.GetUserName(SignInManager.Context.User) == product.UserEmail)
-            {
-                <div class="col-1"><a class="btn btn-secondary" asp-action="edit" asp-route-id="@product.Id">Edit</a></div>
-            }
-            else 
-            {
-                <div class="col-1"><a class="btn btn-secondary" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id">Put in cart</a></div>
-            }
-        </section>
+            <section class="row grid-row">
+                <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
+                <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
+                <div class="col-6 col-md-2">@Html.DisplayFor(x => product.UserEmail)</div>
+                <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Status)</div>
+                
+                <!-- Buttons -->
+                <p>
+                    <a asp-controller="Comments" asp-action="Index" asp-route-id="@product.Id">View comments</a> |
+                    <a asp-controller="Comments" asp-action="Create" asp-route-id="@product.Id">Create a comment</a> |
+                    @if (product.UserEmail != null && SignInManager.UserManager.GetUserName(SignInManager.Context.User) == product.UserEmail)
+                    {
+                        <a asp-action="edit" asp-route-id="@product.Id">Edit</a>
+                    }
+                    else 
+                    {
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id">Put in cart</a>
+                    }
+                </p>
+            </section>
         }
     </section>
 </section>

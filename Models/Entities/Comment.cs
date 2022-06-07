@@ -14,7 +14,11 @@ namespace Entities
         [MaxLength(500,ErrorMessage = "Maximum length is 500!")]
         private string _content {get; set;} public string Content {get{return _content;} set{_content = value;}}
 
-        private DateTime _timeStamp {get;} public DateTime TimeStamp {get{return _timeStamp;}}
+        private DateTime _timeStamp { get; set; } public DateTime TimeStamp
+        {
+            get{return _timeStamp;}
+            set { _timeStamp = DateTime.Now; }
+        }
 
         public string UserId { get; set; }
         public IdentityUser? User { get; set; }

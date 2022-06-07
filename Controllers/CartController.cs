@@ -20,33 +20,44 @@ public class CartController : Controller
         service = new CartService(context);
     }
 
-    public IActionResult Index() 
+    public async Task<IActionResult> Index()
     {
-        return View(service.FindCart(_manager.GetUserAsync(HttpContext.User)).Products); 
+        Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
+        return View(cart.Products); 
     }
     
     [HttpPost]
-    public IActionResult AddToCart(int id,
+    public async Task<RedirectToActionResult> AddToCart(int id,
         [Bind("Id", "Title", "Description", "Price", "Status", "User", "UserId", "UserEmail")] Product product)
     {
         if (ModelState.IsValid)
         {
-            Cart cart = _context.Carts.Find(id);
+            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
             cart.AddProduct(product);
             
             _context.Carts.Update(cart);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
+        
         return RedirectToAction("Index");
     }
 
-    public IActionResult BuyAll()
+    [HttpPost]
+    public async Task<RedirectToActionResult> RemoveProduct(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
     {
-        Cart cart = service.FindCart(_manager.GetUserAsync(HttpContext.User));
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index");
+    }
+
+    public async Task<RedirectToActionResult> BuyAll()
+    {
+        Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
         cart.RemoveProducts(); 
         
         _context.Carts.Update(cart); 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return RedirectToAction("Index");
     }

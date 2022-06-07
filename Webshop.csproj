@@ -28,4 +28,12 @@
     <_ContentIncludedByDefault Remove="Views\Users\index.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ressources\static" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\logo.png" />
+  </ItemGroup>
+
 </Project>

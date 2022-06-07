@@ -8,7 +8,12 @@ namespace Entities
         [Key]
         public int Id { get; set; }
 
-        private List<Product> _products {get; set;} public List<Product> Products { get{return _products;} }
+        private List<Product> _products {get; set;} public List<Product> Products
+        {
+            get{return _products;}
+            set => _products = value;
+        }
+
         public List<Product> AddProduct(Product product)
         {
             _products.Add(product);

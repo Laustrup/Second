@@ -10,26 +10,41 @@ namespace services
 
         public CartService(WebshopContext context) { _context = context; }
 
-        public Cart FindCart(Task<IdentityUser> user)
+        public async Task<Cart> FindCart(Task<IdentityUser> user)
         {
             List<Cart> carts = _context.Carts.ToList();
-        
-            foreach (var cart in carts)
-            {
-                if (cart.User != null)
-                {
-                    int cartId;
+            
+            foreach (var cart in carts) 
+            { 
+                if (cart.User != null) 
+                { 
+                    int cartId; 
                     Int32.TryParse(cart.User.Id, out cartId);
                     
-                    if (cartId == user.Id)
+                    if (cartId == user.Id) 
                     { 
                         return cart;
                     }
                 }
-            }
-            return null;
+            } 
+            return await GenerateCart(user.Result);
+        }
+
+        public async Task<Cart> GenerateCart(IdentityUser user)
+        {
+            Cart cart = new Cart();
+            
+            cart.User = user;
+            cart.UserId = user.Id;
+            cart.Products = new List<Product>();
+
+            await _context.Carts.AddAsync(cart);
+            await _context.SaveChangesAsync();
+
+            return cart;
         }
     }
+   
 }
 
 

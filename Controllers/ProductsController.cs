@@ -22,8 +22,28 @@ namespace Controllers
             _manager = manager;
         }
 
+        /*
         [AllowAnonymous]
         public IActionResult Index() { return View( _context.Products.ToList()); }
+        */
+        
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            if (searchString != null)
+            {
+                var products = from p in _context.Products select p;
+            
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    products = products.Where(s => s.Title!.Contains(searchString));
+                }
+            
+                return View(await products.ToListAsync());
+            }
+
+            return View(_context.Products.ToList());
+        }
 
         public IActionResult Create() { return View(); }
 
@@ -38,7 +58,7 @@ namespace Controllers
                 product.Status = ProductStatus.UNSOLD;
                 
                 _context.Products.Add(product);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 
                 return RedirectToAction("Index");
             }
@@ -48,12 +68,17 @@ namespace Controllers
         public IActionResult Edit(int id) { return View(_context.Products.Find(id)); }
 
         [HttpPost]
-        public IActionResult Edit(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.User = await _manager.GetUserAsync(HttpContext.User);
+                product.UserId = product.User.Id;
+                product.UserEmail = product.User.Email;
+                
                 _context.Products.Update(product);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                
                 return RedirectToAction("Index");
             }
             return View();

@@ -11,7 +11,10 @@ namespace Controllers
 
         public CommentsController(WebshopContext context) {_context = context;}
 
-        public async Task<IActionResult> Index() { return View(await _context.Comments.Include(c => c.Product).ToListAsync()); }
+        public async Task<IActionResult> Index(int id)
+        {
+            return View((await _context.Products.FindAsync(id)).Comments);
+        }
 
         public async Task<IActionResult> Details(int? id)
         {

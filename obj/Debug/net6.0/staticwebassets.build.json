@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iYjt4jeRRpibzPuyaGA9tf3tecNVxEgRSVVkqXzOAjE=",
+  "Hash": "WpTkoZzoqMZ/ZWAJWmtxlfLrPmY1+1S0ATthWlM5U50=",
   "Source": "Webshop",
   "BasePath": "_content/Webshop",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Laust\\RiderProjects\\Second\\wwwroot\\images\\logo.png",
+      "SourceId": "Webshop",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Laust\\RiderProjects\\Second\\wwwroot\\",
+      "BasePath": "_content/Webshop",
+      "RelativePath": "images/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo.png"
     },
     {
       "Identity": "C:\\Users\\Laust\\RiderProjects\\Second\\wwwroot\\js\\site.js",

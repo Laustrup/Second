@@ -9,10 +9,32 @@ namespace Webshop.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Id",
+            migrationBuilder.AddColumn<string>(
+                name: "UserEmail",
                 table: "Comments",
-                newName: "CommentId");
+                type: "TEXT",
+                nullable: true);
+
+            migrationBuilder.UpdateData(
+                table: "AspNetUsers",
+                keyColumn: "Id",
+                keyValue: "1",
+                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
+                values: new object[] { "d94516d1-b337-40ca-be36-be3cf63145f9", "AQAAAAEAACcQAAAAEPisOPHO9DdgKFqIw0BOFty68V8FZBETkQnYrL6UrIahKW0+8MELntNBhnNRwrq//A==", "a5706420-6046-4c7c-a076-eaa00080ada8" });
+
+            migrationBuilder.UpdateData(
+                table: "Comments",
+                keyColumn: "CommentId",
+                keyValue: 1,
+                column: "TimeStamp",
+                value: new DateTime(2022, 6, 7, 17, 50, 33, 770, DateTimeKind.Local).AddTicks(3496));
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "UserEmail",
+                table: "Comments");
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
@@ -26,29 +48,7 @@ namespace Webshop.Migrations
                 keyColumn: "CommentId",
                 keyValue: 1,
                 column: "TimeStamp",
-                value: new DateTime(2022, 6, 7, 16, 33, 16, 843, DateTimeKind.Local).AddTicks(2550));
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "CommentId",
-                table: "Comments",
-                newName: "Id");
-
-            migrationBuilder.UpdateData(
-                table: "AspNetUsers",
-                keyColumn: "Id",
-                keyValue: "1",
-                columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "2813afeb-c6f0-41f1-aee6-5b1bac50b69f", "AQAAAAEAACcQAAAAEMBZbI1s5fjOvPwCy1HXDQYDB+sdxfNk372jj5Sr1/XSJeBDyd9gt8rClNZeVqzPxw==", "b6cf65e8-e340-40fa-9771-344364748a03" });
-
-            migrationBuilder.UpdateData(
-                table: "Comments",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "TimeStamp",
-                value: new DateTime(2022, 6, 7, 16, 7, 18, 715, DateTimeKind.Local).AddTicks(78));
+                value: new DateTime(2022, 6, 7, 16, 33, 16, 594, DateTimeKind.Local).AddTicks(5888));
         }
     }
 }

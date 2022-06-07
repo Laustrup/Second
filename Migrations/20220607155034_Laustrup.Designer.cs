@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Webshop.Migrations
 {
     [DbContext(typeof(WebshopContext))]
-    [Migration("20220607143317_Laustrup")]
+    [Migration("20220607155034_Laustrup")]
     partial class Laustrup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,9 @@ namespace Webshop.Migrations
                     b.Property<DateTime?>("TimeStamp")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
@@ -67,7 +70,7 @@ namespace Webshop.Migrations
                             CommentId = 1,
                             Content = "This is the first comment!",
                             ProductId = 1,
-                            TimeStamp = new DateTime(2022, 6, 7, 16, 33, 16, 594, DateTimeKind.Local).AddTicks(5888),
+                            TimeStamp = new DateTime(2022, 6, 7, 17, 50, 33, 629, DateTimeKind.Local).AddTicks(2137),
                             UserId = "1"
                         });
                 });
@@ -237,13 +240,13 @@ namespace Webshop.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ab304d6d-df9f-4e5f-9a6a-e5dce4a6e9ea",
+                            ConcurrencyStamp = "d94516d1-b337-40ca-be36-be3cf63145f9",
                             Email = "laust.bonnesen@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEO9b21DukwKpqwZnc56xanzruRHeLZBPAU+aMO4f3IAYeXNSw4tlCAmo2Xa3iItK2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPisOPHO9DdgKFqIw0BOFty68V8FZBETkQnYrL6UrIahKW0+8MELntNBhnNRwrq//A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "155dfc3a-697b-441a-984b-8d4fd2fb6e55",
+                            SecurityStamp = "a5706420-6046-4c7c-a076-eaa00080ada8",
                             TwoFactorEnabled = false,
                             UserName = "Laustrup"
                         });

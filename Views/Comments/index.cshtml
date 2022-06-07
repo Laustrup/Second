@@ -1,42 +1,46 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
-@model Entities.Product
+@model IEnumerable<Entities.Comment>
 
 @inject SignInManager<IdentityUser> SignInManager
 
-@{ViewData["Title"] = Model.Title;}
+@{ViewData["Title"] = @ViewBag.ProductTitle;}
+
 
 <section class="justify-content-between">
-    <h3>@Html.DisplayFor(model => model.Title)</h3>
-    <p>@Html.DisplayFor(model => model.Description)</p>
+    <h3>@ViewBag.ProductTitle</h3>
+    <p>@ViewBag.ProductDescription</p>
 </section>
 
 <div class="col-1">
-    <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.Id" >Create a comment</a>
+    <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@ViewBag.ProductId">Create a comment</a>
 </div>
 
 <table class="table">
     <thead>
     <tr>
         <th class="col-2 col-md-2">
-            @Html.DisplayNameFor(model => model.Comments.First().User.UserName)   
+            @Html.DisplayNameFor(model => model.User.UserName)   
         </th>
         <th class="col-3 col-md-5">
-            @Html.DisplayNameFor(model => model.Comments.First().Content)
+            @Html.DisplayNameFor(model => model.Content)
         </th>
         <th class="col-1 col-md-1">
-            @Html.DisplayNameFor(model => model.Comments.First().TimeStamp) 
+            @Html.DisplayNameFor(model => model.TimeStamp) 
+        </th>
+        <th class="col-1 col-md-1">
+            Button
         </th>
     </tr>
     </thead>
     @if (Model != null)
     {
         <tbody>
-            @foreach (var item in Model.Comments)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.UserName)
+                        @Html.DisplayFor(modelItem => item.UserEmail)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Content)

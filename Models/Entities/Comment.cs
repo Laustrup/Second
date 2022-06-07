@@ -27,6 +27,7 @@ namespace Entities
         }
 
         public string? UserId { get; set; }
+        public string? UserEmail { get; set; }
         public IdentityUser? User { get; set; }
         
    }

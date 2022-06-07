@@ -23,16 +23,16 @@ namespace Controllers
         public async Task<IActionResult> Index(int id)
         {
             Product product = await _context.Products.FindAsync(id);
-
-            if (product.Comments == null)
-            {
-                product.Comments = new List<Comment>();
-
-                _context.Products.Update(product);
-                await _context.SaveChangesAsync();
-            }
             
-            return View(product);
+            ViewData["ProductId"] = product.Id;
+            ViewData["ProductTitle"] = product.Title;
+            ViewData["ProductDescription"] = product.Description;
+
+            var comments = from c in _context.Comments select c;
+
+            comments = comments.Where(c => c.ProductId == id);
+            
+            return View(comments.ToList());
         }
 
         public IActionResult Create(int? id)
@@ -50,6 +50,7 @@ namespace Controllers
                 comment.TimeStamp = DateTime.Now; 
                 comment.User = await _manager.GetUserAsync(HttpContext.User); 
                 comment.UserId = comment.User.Id;
+                comment.UserEmail = comment.User.Email;
                 comment.Product = await _context.Products.FindAsync(comment.ProductId);
                 
                 _context.Add(comment); 
@@ -110,7 +111,10 @@ namespace Controllers
         {
             _context.Comments.Remove((await _context.Comments.FindAsync(id))!);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction( 
+                controllerName: "Comments",
+                actionName: "Index",
+                routeValues: id);
         }
     }
 }

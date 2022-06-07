@@ -12,7 +12,7 @@
 </section>
 
 <div class="col-1">
-    <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.Id">Create a comment</a>
+    <a class="btn btn-secondary" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.Id" >Create a comment</a>
 </div>
 
 <table class="table">
@@ -49,8 +49,8 @@
                          SignInManager.UserManager.GetUserName(SignInManager.Context.User) == item.Product.UserEmail)
                     {
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
                         </td>
                     }
                 </tr>

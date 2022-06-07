@@ -32,11 +32,9 @@ namespace Entities
 
         private ProductStatus _status {get;set;} public ProductStatus Status {get{return _status;} set{_status = value;}}
 
-        public List<Comment> Add_Comment(Comment comment)
+        public List<Comment> AddComment(Comment comment)
         {
-            if (_comments == null) {
-                return null;
-            }
+            if (_comments == null) { _comments = new List<Comment>(); }
             _comments.Add(comment);
             return _comments;
         }

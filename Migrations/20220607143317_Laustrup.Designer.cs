@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Webshop.Migrations
 {
     [DbContext(typeof(WebshopContext))]
-    [Migration("20220604131001_Laustrup")]
+    [Migration("20220607143317_Laustrup")]
     partial class Laustrup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,26 +37,39 @@ namespace Webshop.Migrations
 
             modelBuilder.Entity("Entities.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("TimeStamp")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("CommentId");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            CommentId = 1,
+                            Content = "This is the first comment!",
+                            ProductId = 1,
+                            TimeStamp = new DateTime(2022, 6, 7, 16, 33, 16, 594, DateTimeKind.Local).AddTicks(5888),
+                            UserId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Product", b =>
@@ -101,7 +114,9 @@ namespace Webshop.Migrations
                             Description = "This is a guitar",
                             Price = 15000,
                             Status = 1,
-                            Title = "Gibson Les Paul Standard"
+                            Title = "Gibson Les Paul Standard",
+                            UserEmail = "laust.bonnesen@mail.com",
+                            UserId = "1"
                         });
                 });
 
@@ -216,6 +231,22 @@ namespace Webshop.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ab304d6d-df9f-4e5f-9a6a-e5dce4a6e9ea",
+                            Email = "laust.bonnesen@mail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEO9b21DukwKpqwZnc56xanzruRHeLZBPAU+aMO4f3IAYeXNSw4tlCAmo2Xa3iItK2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "155dfc3a-697b-441a-984b-8d4fd2fb6e55",
+                            TwoFactorEnabled = false,
+                            UserName = "Laustrup"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -312,13 +343,17 @@ namespace Webshop.Migrations
 
             modelBuilder.Entity("Entities.Comment", b =>
                 {
-                    b.HasOne("Entities.Product", null)
+                    b.HasOne("Entities.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });

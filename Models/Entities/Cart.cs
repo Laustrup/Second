@@ -8,20 +8,17 @@ namespace Entities
         [Key]
         public int Id { get; set; }
 
-        private List<Product> _products {get; set;} public List<Product> Products
-        {
-            get{return _products;}
-            set => _products = value;
-        }
+        public List<Product>? Products { get; set; }
 
         public List<Product> AddProduct(Product product)
         {
-            _products.Add(product);
-            return _products;            
+            if (Products == null) {Products = new List<Product>();}
+            if (!Products.Contains(product)) { Products.Add(product); }
+            return Products;
         }
-        public void RemoveProducts() { _products = new List<Product>(); }
+        public void RemoveProducts() { Products = new List<Product>(); }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public IdentityUser? User { get; set; }
     }
 }

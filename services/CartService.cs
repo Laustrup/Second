@@ -17,8 +17,13 @@ namespace services
             
             foreach (var cart in carts) 
             {
-                if (cart.UserId != null && cart.UserId == user.Id.ToString()) { return cart; }
+                if (cart.UserId != null || cart.UserId == user.Result.Id)
+                {
+                    Console.WriteLine("\n\nReturns cart\n" + cart.Id + "\n" + cart.UserId + "\n" + cart.Products + "\n\n");
+                    return cart;
+                }
             } 
+            Console.WriteLine("\n\nGenerates cart\n\n");
             return await GenerateCart(user.Result);
         }
 

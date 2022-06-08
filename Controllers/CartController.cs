@@ -24,27 +24,36 @@ namespace Controllers
         
         public async Task<IActionResult> Index()
         {
-            return View(await service.FindCart(_manager.GetUserAsync(HttpContext.User))); 
+            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
+            if (cart.Products!=null) {Console.WriteLine("\n\n" + cart.Products.Count + "\n\n");}
+
+            ViewData["CartId"] = cart.Id;
+            
+            return View(cart.Products); 
         }
         
         public async Task<RedirectToActionResult> AddToCart(int id)
         {
-            Console.WriteLine(id + " Entered add to cart");
-            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User)); 
-            Console.WriteLine(cart.Id + " cart found");
+            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
             cart.AddProduct(await _context.Products.FindAsync(id));
-            Console.WriteLine(cart.Id + " added product");
 
-            if (_context.Carts.Contains(cart)) { _context.Update(cart); }
-            else { _context.Carts.Add(cart); }
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Carts.Update(cart);
+                Console.WriteLine("\nWill add cart" + cart.UserId + "\n" + cart.Products[0].Title + "\n\n");
+                await _context.SaveChangesAsync();
+                Console.WriteLine("Cart saved!");
+            }
+            catch {Console.WriteLine("\nCouldn't add product\n\n");}
 
             return RedirectToAction("Index");
         }
         
         public async Task<RedirectToActionResult> RemoveProduct(int id)
         {
-            _context.Products.Remove(await _context.Products.FindAsync(id));
+            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
+            cart.RemoveProducts();
+            _context.Update(cart);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

@@ -183,7 +183,8 @@ namespace Webshop.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false)
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    CartId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,30 +194,11 @@ namespace Webshop.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartProduct",
-                columns: table => new
-                {
-                    CartsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductsId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartProduct", x => new { x.CartsId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_CartProduct_Carts_CartsId",
-                        column: x => x.CartsId,
+                        name: "FK_Products_Carts_CartId",
+                        column: x => x.CartId,
                         principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -250,17 +232,17 @@ namespace Webshop.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "10b69399-b02a-4882-8ade-8711afe705ef", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAEL4u8ye9C1knWJJIBrFSZYWsnZhSxxjdQEatHheKUfSAPvdCDlf2ZtG5+MpP/Hb63Q==", null, false, "a6034fe8-f58b-4c4a-80d1-716a07274d4b", false, "Laustrup" });
+                values: new object[] { "1", 0, "cfb00400-a98e-4232-bd47-1d17cd5d68a1", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAEOId3to9JgBLu+qnrso82unk+yHTFaLb3V06GyASZd/CA5bDXi2FHOUdXHdEPQvYyw==", null, false, "9a5f840a-b7f2-444f-bad9-0d971e645800", false, "Laustrup" });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Description", "Price", "Status", "Title", "UserEmail", "UserId" },
-                values: new object[] { 1, "This is a guitar", 15000, 1, "Gibson Les Paul Standard", "laust.bonnesen@mail.com", "1" });
+                columns: new[] { "Id", "CartId", "Description", "Price", "Status", "Title", "UserEmail", "UserId" },
+                values: new object[] { 1, null, "This is a guitar", 15000, 1, "Gibson Les Paul Standard", "laust.bonnesen@mail.com", "1" });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "CommentId", "Content", "ProductId", "TimeStamp", "UserEmail", "UserId" },
-                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 8, 11, 21, 35, 192, DateTimeKind.Local).AddTicks(3410), null, "1" });
+                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 8, 21, 4, 6, 906, DateTimeKind.Local).AddTicks(1349), null, "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -300,11 +282,6 @@ namespace Webshop.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartProduct_ProductsId",
-                table: "CartProduct",
-                column: "ProductsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserId",
                 table: "Carts",
                 column: "UserId");
@@ -318,6 +295,11 @@ namespace Webshop.Migrations
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CartId",
+                table: "Products",
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UserId",
@@ -343,19 +325,16 @@ namespace Webshop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartProduct");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

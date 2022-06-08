@@ -1,4 +1,4 @@
-﻿@model Entities.Cart
+﻿@model IEnumerable<Entities.Product>
 
 @{ViewData["Title"] = "Index";}
 
@@ -10,16 +10,22 @@
     
     <hr />
     
-    @if (Model.Products.Count != 0)
+    @if (Model != null)
     {
-        @foreach (var product in Model.Products)
-        {
-            <div class="row grid-row">
-                <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
-                <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
+        <div>
+            @foreach (var item in Model)
+            {
+                <div class="row grid-row">
+                    <div class="col-6 col-md-2">@Html.DisplayFor(modelItem => item.Title)</div>
+                    <div class="col-2 col-md-1">@Html.DisplayFor(modelItem => item.Price)</div>
+                </div>
+                <a class="btn btn-secondary" asp-action="RemoveProduct" asp-route-id="@item.Id">Remove</a>
+                <a class="btn btn-secondary" asp-controller="Comments" asp-action="Index" asp-route-id="@item.Id">Go to product</a>
+            }
+            <div>
+                <a class="btn btn-secondary" asp-action="BuyAll" asp-route-id=@ViewBag["CartId"] >Buy all products</a>
             </div>
-        }
-        <a class="btn btn-secondary" asp-action="BuyAll" asp-route-id="@Model.Id">Buy all products</a>
+        </div>
     }
     else
     {

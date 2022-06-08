@@ -17,21 +17,6 @@ namespace Webshop.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
 
-            modelBuilder.Entity("CartProduct", b =>
-                {
-                    b.Property<int>("CartsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("CartsId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CartProduct");
-                });
-
             modelBuilder.Entity("Entities.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -83,7 +68,7 @@ namespace Webshop.Migrations
                             CommentId = 1,
                             Content = "This is the first comment!",
                             ProductId = 1,
-                            TimeStamp = new DateTime(2022, 6, 8, 11, 21, 35, 61, DateTimeKind.Local).AddTicks(3077),
+                            TimeStamp = new DateTime(2022, 6, 8, 21, 4, 6, 777, DateTimeKind.Local).AddTicks(3509),
                             UserId = "1"
                         });
                 });
@@ -92,6 +77,9 @@ namespace Webshop.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CartId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -113,6 +101,8 @@ namespace Webshop.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("UserId");
 
@@ -248,13 +238,13 @@ namespace Webshop.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "10b69399-b02a-4882-8ade-8711afe705ef",
+                            ConcurrencyStamp = "cfb00400-a98e-4232-bd47-1d17cd5d68a1",
                             Email = "laust.bonnesen@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEL4u8ye9C1knWJJIBrFSZYWsnZhSxxjdQEatHheKUfSAPvdCDlf2ZtG5+MpP/Hb63Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOId3to9JgBLu+qnrso82unk+yHTFaLb3V06GyASZd/CA5bDXi2FHOUdXHdEPQvYyw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a6034fe8-f58b-4c4a-80d1-716a07274d4b",
+                            SecurityStamp = "9a5f840a-b7f2-444f-bad9-0d971e645800",
                             TwoFactorEnabled = false,
                             UserName = "Laustrup"
                         });
@@ -343,21 +333,6 @@ namespace Webshop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CartProduct", b =>
-                {
-                    b.HasOne("Entities.Cart", null)
-                        .WithMany()
-                        .HasForeignKey("CartsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Entities.Cart", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -386,6 +361,10 @@ namespace Webshop.Migrations
 
             modelBuilder.Entity("Entities.Product", b =>
                 {
+                    b.HasOne("Entities.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -442,6 +421,11 @@ namespace Webshop.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Cart", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Entities.Product", b =>

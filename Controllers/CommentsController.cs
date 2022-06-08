@@ -69,7 +69,7 @@ namespace Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id", "Content")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("CommentId", "Content")] Comment comment)
         {
             if (id != comment.CommentId) { return NotFound(); }
 
@@ -79,12 +79,12 @@ namespace Controllers
                 try
                 {
                     commentFromDb.Content = comment.Content;
-
                     _context.Comments.Update(commentFromDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    Console.WriteLine("\nTrouble editing comment\n\n");
                     if (_context.Comments.Any(comment => comment.CommentId == id)) { return NotFound(); }
                     else { throw; }
                 }

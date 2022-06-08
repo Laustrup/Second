@@ -57,6 +57,10 @@
                             <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
                         </td>
                     }
+                    else
+                    {
+                        <p>Can't edit</p>
+                    }
                 </tr>
             }
         </tbody>

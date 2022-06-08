@@ -75,7 +75,7 @@ namespace Controllers
 
             if (ModelState.IsValid)
             {
-                Comment commentFromDb = _context.Comments.Find(id);
+                Comment commentFromDb = await _context.Comments.FindAsync(id);
                 try
                 {
                     commentFromDb.Content = comment.Content;

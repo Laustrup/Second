@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.Product>
+﻿@model Entities.Cart
 
 @{ViewData["Title"] = "Index";}
 
@@ -10,10 +10,10 @@
     
     <hr />
     
-    @if (Model != null)
+    @if (Model.Products != null)
     {
         <div>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Products)
             {
                 <div class="row grid-row">
                     <div class="col-6 col-md-2">@Html.DisplayFor(modelItem => item.Title)</div>
@@ -23,7 +23,7 @@
                 <a class="btn btn-secondary" asp-controller="Comments" asp-action="Index" asp-route-id="@item.Id">Go to product</a>
             }
             <div>
-                <a class="btn btn-secondary" asp-action="BuyAll" asp-route-id=@ViewBag["CartId"] >Buy all products</a>
+                <a class="btn btn-secondary" asp-action="BuyAll" asp-route-id="@Model.Id" >Buy all products</a>
             </div>
         </div>
     }

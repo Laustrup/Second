@@ -19,6 +19,11 @@ namespace services
             {
                 if (cart.UserId != null || cart.UserId == user.Result.Id)
                 {
+                    List<Product> products = _context.Products.ToList();
+                    foreach (var product in products)
+                    {
+                        if (product.CartId != null && product.CartId == cart.Id) {cart.AddProduct(product);}
+                    }
                     Console.WriteLine("\n\nReturns cart\n" + cart.Id + "\n" + cart.UserId + "\n" + cart.Products + "\n\n");
                     return cart;
                 }
@@ -43,13 +48,12 @@ namespace services
         
         public Cart BuyProducts(Cart cart)
         {
-            List<Product> products = cart.Products;
-
+            List<Product> products = _context.Products.ToList();
             foreach (var product in products)
             {
                 product.Status = ProductStatus.SOLD;
-                products.Remove(product);
             }
+            cart.Products = null;
 
             return cart;
         }

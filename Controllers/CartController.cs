@@ -26,10 +26,8 @@ namespace Controllers
         {
             Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
             if (cart.Products!=null) {Console.WriteLine("\n\n" + cart.Products.Count + "\n\n");}
-
-            ViewData["CartId"] = cart.Id;
             
-            return View(cart.Products); 
+            return View(cart); 
         }
         
         public async Task<RedirectToActionResult> AddToCart(int id)
@@ -39,10 +37,8 @@ namespace Controllers
 
             try
             {
-                _context.Carts.Update(cart);
-                Console.WriteLine("\nWill add cart" + cart.UserId + "\n" + cart.Products[0].Title + "\n\n");
+                _context.Update(cart);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("Cart saved!");
             }
             catch {Console.WriteLine("\nCouldn't add product\n\n");}
 

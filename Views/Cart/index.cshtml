@@ -1,14 +1,30 @@
-﻿@model IEnumerable<Entities.Product>
+﻿@model Entities.Cart
 
 @{ViewData["Title"] = "Index";}
 
-<section id="cart_info">
-    @foreach (var product in Model)
-    {
-        <div class="row grid-row">
-            <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
-            <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
-        </div>
-    }
+<section>
+    <section>
+        <h1>Cart</h1>
+        <h3>Here you can see the products in your cart</h3>
+    </section>
     
+    <hr />
+    
+    @if (Model.Products.Count != 0)
+    {
+        @foreach (var product in Model.Products)
+        {
+            <div class="row grid-row">
+                <div class="col-6 col-md-2">@Html.DisplayFor(x => product.Title)</div>
+                <div class="col-2 col-md-1">@Html.DisplayFor(x => product.Price)</div>
+            </div>
+        }
+        <a class="btn btn-secondary" asp-action="BuyAll" asp-route-id="@Model.Id">Buy all products</a>
+    }
+    else
+    {
+        <p>Sorry, your cart is empty...</p>
+        <a asp-controller="Products" asp-action="Index">Search our products</a>
+    }
+
 </section>

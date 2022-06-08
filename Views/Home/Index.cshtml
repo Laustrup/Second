@@ -17,20 +17,34 @@
 <!-- User details -->
 @if (SignInManager.IsSignedIn(User))
 {
-    @model IdentityUser
     <section>
-        <!-- Details of user -->
-        <section class="details">
-            <dl class="row">
-                <p>Username:</p>
-                <dt class="col-6 col-md-2">@Html.DisplayFor(Model => Model.UserName)</dt>
-                
-                <p>Email:</p>
-                <dt class="d-none d-md-block col-md-6">@Html.DisplayFor(Model => Model.Email)</dt>
-                
-                <p>Phonenumber:</p>
-                <dt class="col-2 col-md-1">@Html.DisplayFor(Model => Model.PhoneNumber)</dt>
-            </dl>
-        </section>
+        <h1>You are now signed in!</h1>
+        <h3>Now you can do authorized actions, such as:</h3>
+        
+        <hr />
+        
+        <dl>
+            <h4>For products</h4>
+            <dt class="col-6 col-md-2">Post</dt>
+            <dt class="col-6 col-md-2">Edit</dt>
+            <dt class="col-6 col-md-2">Delete</dt>
+        </dl>
+
+        <dl>
+            <h4>For cart</h4>
+            <dt class="col-6 col-md-2">Put in a product</dt>
+            <dt class="col-6 col-md-2">Remove a product</dt>
+            <dt class="col-6 col-md-2">Buy products</dt>
+        </dl>
+
+        <dl>
+            <h4>For Comments</h4>
+            <dt class="col-6 col-md-2">Create</dt>
+            <dt class="col-6 col-md-2">Edit</dt>
+            <dt class="col-6 col-md-2">Delete</dt>
+        </dl>
+        
+        <h5>Hope you will enjoy Second</h5>
+        
     </section>
 }

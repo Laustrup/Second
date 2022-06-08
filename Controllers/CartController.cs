@@ -23,29 +23,25 @@ public class CartController : Controller
     public async Task<IActionResult> Index()
     {
         Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
-        return View(cart.Products); 
+        return View(cart); 
     }
     
     [HttpPost]
-    public async Task<RedirectToActionResult> AddToCart(int id,
-        [Bind("Id", "Title", "Description", "Price", "Status", "User", "UserId", "UserEmail")] Product product)
+    public async Task<RedirectToActionResult> AddToCart(int id)
     {
-        if (ModelState.IsValid)
-        {
-            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
-            cart.AddProduct(product);
-            
-            _context.Carts.Update(cart);
-            await _context.SaveChangesAsync();
-        }
+        Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User)); 
+        cart.AddProduct(await _context.Products.FindAsync(id));
         
+        _context.Carts.Update(cart); 
+        await _context.SaveChangesAsync();
+
         return RedirectToAction("Index");
     }
 
     [HttpPost]
-    public async Task<RedirectToActionResult> RemoveProduct(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
+    public async Task<RedirectToActionResult> RemoveProduct(int id)
     {
-        _context.Products.Remove(product);
+        _context.Products.Remove(await _context.Products.FindAsync(id));
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Index");
@@ -53,10 +49,7 @@ public class CartController : Controller
 
     public async Task<RedirectToActionResult> BuyAll()
     {
-        Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
-        cart.RemoveProducts(); 
-        
-        _context.Carts.Update(cart); 
+        _context.Carts.Update(service.BuyProducts(await service.FindCart(_manager.GetUserAsync(HttpContext.User)))); 
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Index");

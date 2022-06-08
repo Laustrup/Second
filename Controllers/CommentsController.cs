@@ -21,7 +21,7 @@ namespace Controllers
 
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
-        {
+        {   
             Product product = await _context.Products.FindAsync(id);
             
             ViewData["ProductId"] = product.Id;
@@ -60,25 +60,27 @@ namespace Controllers
                     controllerName: "Comments",
                     actionName: "Index",
                     routeValues: new {id = comment.ProductId}
-                    );
+                );
             }
             return View();
         }
+        
+        public async Task<IActionResult> Edit(int id) {return View(await _context.Comments.FindAsync(id));}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id", "ProductId", "Content")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id", "Content")] Comment comment)
         {
             if (id != comment.CommentId) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
+                Comment commentFromDb = _context.Comments.Find(id);
                 try
                 {
-                    Comment commentFromDb = _context.Comments.Find(comment.CommentId);
                     commentFromDb.Content = comment.Content;
 
-                    _context.Update(commentFromDb);
+                    _context.Comments.Update(commentFromDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -86,7 +88,11 @@ namespace Controllers
                     if (_context.Comments.Any(comment => comment.CommentId == id)) { return NotFound(); }
                     else { throw; }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction( 
+                    controllerName: "Comments",
+                    actionName: "Index",
+                    routeValues: new {id = commentFromDb.ProductId}
+                );
             }
 
             return View(comment);
@@ -107,14 +113,17 @@ namespace Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id) 
+        public async Task<IActionResult> Delete(int id)
         {
+            int productId = (await _context.Comments.FindAsync(id)).ProductId;
             _context.Comments.Remove((await _context.Comments.FindAsync(id))!);
             await _context.SaveChangesAsync();
+            
             return RedirectToAction( 
                 controllerName: "Comments",
                 actionName: "Index",
-                routeValues: id);
+                routeValues: new {id = productId}
+            );
         }
     }
 }

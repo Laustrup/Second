@@ -1,5 +1,6 @@
 ﻿using Data;
 using Entities;
+using Entities.Statuses;
 using Microsoft.AspNetCore.Identity;
 
 namespace services
@@ -43,8 +44,20 @@ namespace services
 
             return cart;
         }
+        
+        public Cart BuyProducts(Cart cart)
+        {
+            List<Product> products = cart.Products;
+
+            foreach (var product in products)
+            {
+                product.Status = ProductStatus.SOLD;
+                products.Remove(product);
+            }
+
+            return cart;
+        }
     }
-   
 }
 
 

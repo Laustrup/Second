@@ -29,6 +29,7 @@ namespace Entities
             get{return _comments;}
             set => _comments = value;
         }
+        public List<Cart>? Carts { get; set; }
 
         private ProductStatus _status {get;set;} public ProductStatus Status {get{return _status;} set{_status = value;}}
 

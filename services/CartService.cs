@@ -16,17 +16,8 @@ namespace services
             List<Cart> carts = _context.Carts.ToList();
             
             foreach (var cart in carts) 
-            { 
-                if (cart.User != null) 
-                { 
-                    int cartId; 
-                    Int32.TryParse(cart.User.Id, out cartId);
-                    
-                    if (cartId == user.Id) 
-                    { 
-                        return cart;
-                    }
-                }
+            {
+                if (cart.UserId != null && cart.UserId == user.Id.ToString()) { return cart; }
             } 
             return await GenerateCart(user.Result);
         }

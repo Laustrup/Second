@@ -35,9 +35,10 @@ namespace Controllers
             return View(comments.ToList());
         }
 
-        public IActionResult Create(int? id)
+        public async Task<ViewResult> Create(int? id)
         {
             ViewData["ProductId"] = RouteData.Values["id"];
+            if (id != null) {return View(await _context.Comments.FindAsync(id));}
             return View();
         }
 

@@ -26,6 +26,14 @@
             </div>
         </form>
     </div>
+    @if (Model != null)
+    {
+        <div><a asp-action="Index" asp-route-id="@Model.CommentId">Go back</a></div>        
+    }
+    else
+    {
+        <div><a asp-controller="Products" asp-action="Index">Go back</a></div>   
+    }
 </section>
 
 @section Scripts {

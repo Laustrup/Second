@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Webshop.Migrations
 {
-    public partial class Laustrup : Migration
+    public partial class laustrup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,20 @@ namespace Webshop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartIndices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CartId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartIndices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,8 +197,8 @@ namespace Webshop.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    CartId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false)
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    CartId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,7 +246,7 @@ namespace Webshop.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "f8f2a84f-8f1d-48d9-9738-bf23ea6213b9", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAECMAO9c1tx5VC0GR84pGVho4WUjiEK4ZD6wynOyXKz2j7Qb4Dxwc7S8Ow3U5V/z4Zw==", null, false, "da8fabe3-4898-4b4d-bae7-e746971e6278", false, "Laustrup" });
+                values: new object[] { "1", 0, "8475ea55-af1e-4153-b314-d7e87b4f6b9b", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAENIlGz9GlMEe+OBrRt83BZ3I07xXTyHK9BODMk8PQBxrWEWwQKFiK2ouK2BYL5ujVg==", null, false, "52c36a99-1a3f-4cc7-b1f9-afa5ce103923", false, "Laustrup" });
 
             migrationBuilder.InsertData(
                 table: "Products",
@@ -242,7 +256,7 @@ namespace Webshop.Migrations
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "CommentId", "Content", "ProductId", "TimeStamp", "UserEmail", "UserId" },
-                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 9, 9, 2, 34, 801, DateTimeKind.Local).AddTicks(4997), null, "1" });
+                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 18, 13, 50, 36, 168, DateTimeKind.Local).AddTicks(3404), null, "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -323,6 +337,9 @@ namespace Webshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CartIndices");
 
             migrationBuilder.DropTable(
                 name: "Comments");

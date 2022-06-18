@@ -16,7 +16,9 @@ namespace Entities
             if (!Products.Contains(product)) { Products.Add(product); }
             return Products;
         }
+        
         public void RemoveProducts() { Products = new List<Product>(); }
+        public void RemoveProduct(Product product) { if (Products!=null) {Products.Remove(product);} }
 
         public string? UserId { get; set; }
         public IdentityUser? User { get; set; }

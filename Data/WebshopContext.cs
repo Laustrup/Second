@@ -51,6 +51,8 @@ namespace Data
         public DbSet<Cart> Carts { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
+        
+        public DbSet<CartIndex> CartIndices { get; set; }
         private void SeedComments(ModelBuilder builder)
         {
             builder.Entity<Comment>().HasData(

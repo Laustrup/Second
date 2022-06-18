@@ -16,16 +16,5 @@
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
-    @if (Model != null)
-    {
-        <div class="form-group">
-            <label asp-for="Status" class="control-label"></label>
-            <select class="form-control" >
-                <option asp-for="Status" value="ProductStatus.SOLD">SOLD</option>
-                <option asp-for="Status" value="ProductStatus.UNSOLD">UNSOLD</option>
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
-    }
     <div class="form-group"><input type="submit" value="Save" class="btn btn-primary" /></div>
 </section>

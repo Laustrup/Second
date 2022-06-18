@@ -19,11 +19,16 @@ namespace services
             {
                 if (cart.UserId != null && cart.UserId == user.Result.Id)
                 {
-                    List<Product> products = _context.Products.ToList();
-                    foreach (var product in products)
+                    var indices = from ci in _context.CartIndices select ci;
+                    indices.Where(cartIndex => cartIndex.CartId == cart.Id).ToList();
+
+                    List<Product> products = new List<Product>();
+                    foreach (var index in indices)
                     {
-                        if (product.CartId != null && product.CartId == cart.Id) {cart.AddProduct(product);}
+                        products.Add(await _context.Products.FindAsync(index.ProductId));
                     }
+
+                    cart.Products = products;
                     return cart;
                 }
             } 
@@ -45,18 +50,30 @@ namespace services
             return cart;
         }
         
-        public Cart BuyProducts(Cart cart)
+        public async Task<Cart> BuyProducts(Cart cart)
         {
-            List<Product> products = _context.Products.ToList();
+            var indices = from ci in _context.CartIndices select ci;
+            indices.Where(cartIndex => cartIndex.CartId == cart.Id).ToList();
+            
+            List<Product> products = new List<Product>();
+            foreach (var index in indices)
+            {
+                products.Add(await _context.Products.FindAsync(index.ProductId));
+
+                _context.CartIndices.Remove(index);
+            }
+            
             foreach (var product in products)
             {
-                if (product.CartId == cart.Id) { product.Status = ProductStatus.SOLD; }
+                product.Status = ProductStatus.SOLD;
+                 
+                _context.Products.Update(product);
+                await _context.SaveChangesAsync();
             }
+
             cart.Products = null;
 
             return cart;
         }
     }
 }
-
-

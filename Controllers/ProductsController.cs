@@ -68,13 +68,14 @@ namespace Controllers
         public IActionResult Edit(int id) { return View(_context.Products.Find(id)); }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id", "Title", "Description", "Price", "Status")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id", "Title", "Description", "Price")] Product product)
         {
             if (ModelState.IsValid)
             {
                 product.User = await _manager.GetUserAsync(HttpContext.User);
                 product.UserId = product.User.Id;
                 product.UserEmail = product.User.Email;
+                product.Status = (await _context.Products.FindAsync(product.Id)).Status;
                 
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync();

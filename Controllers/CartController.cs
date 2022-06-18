@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Data;
 using Entities;
+using Entities.Statuses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using services;
@@ -32,24 +33,39 @@ namespace Controllers
         
         public async Task<RedirectToActionResult> AddToCart(int id)
         {
-            Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
-            cart.AddProduct(await _context.Products.FindAsync(id));
+            Product product = await _context.Products.FindAsync(id);
 
-            try
+            if (product.Status != ProductStatus.SOLD)
             {
-                _context.Update(cart);
-                await _context.SaveChangesAsync();
+                Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
+                cart.AddProduct(product);
+                
+                try
+                {
+                    CartIndex index = new CartIndex();
+                    index.CartId = cart.Id;
+                    index.ProductId = product.Id;
+                    
+                    await _context.CartIndices.AddAsync(index);
+                    _context.Update(cart);
+                    await _context.SaveChangesAsync();
+                }
+                catch {Console.WriteLine("\nCouldn't add product\n\n");}
             }
-            catch {Console.WriteLine("\nCouldn't add product\n\n");}
-
             return RedirectToAction("Index");
         }
         
         public async Task<RedirectToActionResult> RemoveProduct(int id)
         {
             Cart cart = await service.FindCart(_manager.GetUserAsync(HttpContext.User));
-            cart.RemoveProducts();
+            Product product = await _context.Products.FindAsync(id);
+            var indices = from ci in _context.CartIndices select ci;
+            indices.Where(cartIndex => cartIndex.ProductId == product.Id && cartIndex.CartId == cart.Id).ToList();
+
+            cart.RemoveProduct(await _context.Products.FindAsync(id));
             _context.Update(cart);
+            _context.CartIndices.Remove(indices.Where(index => index.ProductId == product.Id).ToList().First()); 
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
@@ -57,7 +73,7 @@ namespace Controllers
 
         public async Task<RedirectToActionResult> BuyAll()
         {
-            _context.Carts.Update(service.BuyProducts(await service.FindCart(_manager.GetUserAsync(HttpContext.User)))); 
+            _context.Carts.Update(await service.BuyProducts(service.FindCart(_manager.GetUserAsync(HttpContext.User)).Result));
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

@@ -33,6 +33,23 @@ namespace Webshop.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("Entities.CartIndex", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CartIndices");
+                });
+
             modelBuilder.Entity("Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -68,7 +85,7 @@ namespace Webshop.Migrations
                             CommentId = 1,
                             Content = "This is the first comment!",
                             ProductId = 1,
-                            TimeStamp = new DateTime(2022, 6, 9, 9, 2, 34, 598, DateTimeKind.Local).AddTicks(7811),
+                            TimeStamp = new DateTime(2022, 6, 18, 13, 50, 35, 990, DateTimeKind.Local).AddTicks(90),
                             UserId = "1"
                         });
                 });
@@ -238,13 +255,13 @@ namespace Webshop.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8f2a84f-8f1d-48d9-9738-bf23ea6213b9",
+                            ConcurrencyStamp = "8475ea55-af1e-4153-b314-d7e87b4f6b9b",
                             Email = "laust.bonnesen@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAECMAO9c1tx5VC0GR84pGVho4WUjiEK4ZD6wynOyXKz2j7Qb4Dxwc7S8Ow3U5V/z4Zw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENIlGz9GlMEe+OBrRt83BZ3I07xXTyHK9BODMk8PQBxrWEWwQKFiK2ouK2BYL5ujVg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "da8fabe3-4898-4b4d-bae7-e746971e6278",
+                            SecurityStamp = "52c36a99-1a3f-4cc7-b1f9-afa5ce103923",
                             TwoFactorEnabled = false,
                             UserName = "Laustrup"
                         });

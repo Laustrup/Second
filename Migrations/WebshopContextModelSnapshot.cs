@@ -68,7 +68,7 @@ namespace Webshop.Migrations
                             CommentId = 1,
                             Content = "This is the first comment!",
                             ProductId = 1,
-                            TimeStamp = new DateTime(2022, 6, 8, 21, 24, 23, 9, DateTimeKind.Local).AddTicks(4949),
+                            TimeStamp = new DateTime(2022, 6, 9, 9, 2, 34, 598, DateTimeKind.Local).AddTicks(7811),
                             UserId = "1"
                         });
                 });
@@ -238,13 +238,13 @@ namespace Webshop.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1768af2-4657-4ee8-8d04-90f8c5ce9703",
+                            ConcurrencyStamp = "f8f2a84f-8f1d-48d9-9738-bf23ea6213b9",
                             Email = "laust.bonnesen@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEPGK9AUIaYe7QBT4TqDF4001Y9i+QivoKNLD8FefRNz5EaRhgdyJCjxGR4B2vJsJRQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECMAO9c1tx5VC0GR84pGVho4WUjiEK4ZD6wynOyXKz2j7Qb4Dxwc7S8Ow3U5V/z4Zw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c2155bbe-02b8-4e46-ada9-29ed6121f67d",
+                            SecurityStamp = "da8fabe3-4898-4b4d-bae7-e746971e6278",
                             TwoFactorEnabled = false,
                             UserName = "Laustrup"
                         });

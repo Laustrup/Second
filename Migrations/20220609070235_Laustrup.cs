@@ -232,7 +232,7 @@ namespace Webshop.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "a1768af2-4657-4ee8-8d04-90f8c5ce9703", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAEPGK9AUIaYe7QBT4TqDF4001Y9i+QivoKNLD8FefRNz5EaRhgdyJCjxGR4B2vJsJRQ==", null, false, "c2155bbe-02b8-4e46-ada9-29ed6121f67d", false, "Laustrup" });
+                values: new object[] { "1", 0, "f8f2a84f-8f1d-48d9-9738-bf23ea6213b9", "laust.bonnesen@mail.com", true, false, null, null, null, "AQAAAAEAACcQAAAAECMAO9c1tx5VC0GR84pGVho4WUjiEK4ZD6wynOyXKz2j7Qb4Dxwc7S8Ow3U5V/z4Zw==", null, false, "da8fabe3-4898-4b4d-bae7-e746971e6278", false, "Laustrup" });
 
             migrationBuilder.InsertData(
                 table: "Products",
@@ -242,7 +242,7 @@ namespace Webshop.Migrations
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "CommentId", "Content", "ProductId", "TimeStamp", "UserEmail", "UserId" },
-                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 8, 21, 24, 23, 138, DateTimeKind.Local).AddTicks(5492), null, "1" });
+                values: new object[] { 1, "This is the first comment!", 1, new DateTime(2022, 6, 9, 9, 2, 34, 801, DateTimeKind.Local).AddTicks(4997), null, "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

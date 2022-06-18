@@ -49,8 +49,7 @@
                         @Html.DisplayFor(modelItem => item.TimeStamp)
                     </td>
 
-                    @if (item.Product.UserEmail != null &&
-                         SignInManager.UserManager.GetUserName(SignInManager.Context.User) == item.Product.UserEmail)
+                    @if (SignInManager.UserManager.GetUserName(SignInManager.Context.User) == item.Product.UserEmail)
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a> |
@@ -59,7 +58,7 @@
                     }
                     else
                     {
-                        <p>Can't edit</p>
+                        <td>Can't edit</td>
                     }
                 </tr>
             }
